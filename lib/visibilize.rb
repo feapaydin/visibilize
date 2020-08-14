@@ -1,6 +1,7 @@
 require "visibilize/version"
 require "generator"
 
+
 module Visibilize
   class Error < StandardError; end
 
@@ -36,3 +37,4 @@ module Visibilize
 
 
 end
+
