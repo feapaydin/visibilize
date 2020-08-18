@@ -25,7 +25,7 @@ def visibilize(options={})
   end
 
   # Create a callback to execute method
-  callback=callback.to_s.split("_")
+  callback=callback.to_s.split('_')
   set_callback callback[1].to_sym, callback[0].to_sym, method_name.to_sym
 
 end
