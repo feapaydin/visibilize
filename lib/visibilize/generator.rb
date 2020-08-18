@@ -4,7 +4,7 @@ module VisibilizeGenerator
 
   class << self
 
-    def get_value_for(type, column, length, unique=true)
+    def get_value_for(type, klass, column, length, unique)
       method="generate_#{type}"
       
       
@@ -13,21 +13,21 @@ module VisibilizeGenerator
       elsif SecureRandom.respond_to?(type)
         from=:securerandom
       else
-        raise "Visibilize Error: No generator defined for type #{type}. (Asked for column #{column} of #{self.class})" 
+        raise "Visibilize Error: No generator defined for type #{type}. (Asked for column #{column} of #{klass.name})" 
       end
 
       loop do
         if from==:generators
-          generated=public_send(method, length) 
+          generated=public_send(method, length)
         elsif from==:securerandom
           generated=generate_from_securerandom(type, length)
         end
 
-        return generated if !unique || self.class.where("#{column}='#{generated}'").empty?
+        return generated if !unique || klass.where("#{column}='#{generated}'").empty?
       end
 
     end
-    #end get_value_for
+    # end get_value_for
 
     
     #
@@ -35,9 +35,11 @@ module VisibilizeGenerator
     #
 
     def generate_integer(length)
+      return rand(1...10) if length==1
+
       min=10**(length-1)  #1000
       max=9*min + (min-1) #9999
-      rand(min...max)
+      rand(min...(max+1))
     end
 
     def generate_string(length)
@@ -50,7 +52,6 @@ module VisibilizeGenerator
 
       str
     end
-    #end generate_string
 
     def generate_from_securerandom(type, length)
       if SecureRandom.respond_to?(type)  
@@ -66,6 +67,6 @@ module VisibilizeGenerator
 
 
   end
-  #end static
+  # end static
 
 end
