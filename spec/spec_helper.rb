@@ -14,8 +14,10 @@ require "models/computer"
 require "models/book"
 require "models/furniture"
 
-# Connect ActiveRecord
+# Connect ActiveRecord & Migrate DB
 ActiveRecord::Base.establish_connection(YAML::load(File.open('spec/db/database.yaml')))
+ActiveRecord::MigrationContext.new('spec/db/migrations', ActiveRecord::SchemaMigration).migrate
+
 
 UUID_REGEX=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
