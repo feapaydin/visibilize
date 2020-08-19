@@ -161,6 +161,15 @@ Please report any bugs by [creating issues on Github](https://github.com/FEApayd
   
 
 ## Contribution
+
+### Setup
+The tests are using ActiveRecord `6.0` which requires ruby `2.5.0` or further. 
+To install the requirements, run the command:
+
+```
+bin/setup
+```
+
 ### Development
 All of the core files of the gem is under `lib/` directory. 
 You can develop your own generators inside `lib/visibilize/generator.rb` . 
