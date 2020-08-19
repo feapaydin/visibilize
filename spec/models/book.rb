@@ -1,7 +1,8 @@
-class Book < ActiveRecord::Base
+# frozen_string_literal: true
 
-  # unique: true by default
+class Book < ActiveRecord::Base
+  # unique: true by default
   visibilize  column: :page_number,
-              type:   :integer,
-              length: 1  
+              type: :integer,
+              length: 1
 end

@@ -1,6 +1,6 @@
-class Keyboard < ActiveRecord::Base
+# frozen_string_literal: true
 
-  visibilize  column: :serial_number, 
-              type:   :uuid
-  
+class Keyboard < ActiveRecord::Base
+  visibilize  column: :serial_number,
+              type: :uuid
 end
