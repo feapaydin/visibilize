@@ -35,17 +35,17 @@ gem  'visibilize'
 And then execute:
 
   
-
+```
 $ bundle
-
+```
   
 
 Or install it yourself as:
 
   
-
+```
 $ gem install visibilize
-
+```
   
 
 ## Usage
@@ -70,7 +70,7 @@ After the database is ready, open the `app/models/user.rb` file and call `visibi
 
 ```ruby
 class User < ActiveRecord::Base
-	visibilize
+  visibilize
 end
 ```
 That's it.
@@ -89,10 +89,10 @@ Visibilize can be customized with provided options:
 ```ruby
 class User < ActiveRecord::Base
 	visibilize 	column: 	:serial_number, # The column that will be used to store idenitifer
-				type:  		:string, 		# Type/format of the created identifier
-				callback: 	:before_create, # ActiveRecord callback that ID will be created
-				length: 	50,
-				unique:		true 
+              type:  		:string, 		# Type/format of the created identifier
+              callback: 	:before_create, # ActiveRecord callback that ID will be created
+              length: 	50,
+              unique:		true 
 end
 ```
 
@@ -139,7 +139,7 @@ ActiveRecord supports multiple callbacks for different actions. You can provide 
 ```ruby
 class User < ActiveRecord::Base
 	visibilize 	type: 		:uuid,
-				callback: 	:before_update
+				      callback: 	:before_update
 end
 ```  
 Note that visibilize **does not save** the record when it is called. You must save the generated value manually by calling `instance.save` whenever is fit, or use a callback that is just before the saving progress like `before_create`. 
@@ -150,7 +150,7 @@ If you provide a lambda, visibilize will automatically use it and skip its own g
 ```ruby
 class User < ActiveRecord::Base
 	visibilize 	column: :token,
-				lambda: ->() {return  Digest::MD5.hexdigest('foobar')}
+				      lambda: ->() {return  Digest::MD5.hexdigest('foobar')}
 end
 ```  
 Visibilize **cannot modify length** or **promise uniqueness** when using lambdas since the value will be generated from provided lambda method.
