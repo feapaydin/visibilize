@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['feapaydin@gmail.com']
 
   spec.summary       = %q{Generate random friendly identifiers for ActiveRecord instances.}
-  spec.description   = %q{Visibilize generates random friendly identifiers (visible_id) for ActiveRecord models that can be exposed to end users. }
+  spec.description   = %q{Visibilize generates random friendly identifiers (visible_id) that can be exposed to end users for ActiveRecord models. }
   spec.homepage      = 'https://github.com/FEApaydin/visibilize'
   spec.license       = 'MIT'
 
