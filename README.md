@@ -88,11 +88,11 @@ User.find_by(visible_id: params[:id])
 Visibilize can be customized with provided options:
 ```ruby
 class User < ActiveRecord::Base
-	visibilize 	column: 	:serial_number, # The column that will be used to store idenitifer
-              type:  		:string, 		# Type/format of the created identifier
-              callback: 	:before_create, # ActiveRecord callback that ID will be created
-              length: 	50,
-              unique:		true 
+  visibilize  column:   :serial_number, # The column that will be used to store idenitifer
+              type:     :string, 	# Type/format of the created identifier
+              callback: :before_create, # ActiveRecord callback that ID will be created
+              length:   50,
+              unique:   true  
 end
 ```
 
@@ -105,9 +105,9 @@ Both string and integer values are being generated with respect to length option
 The type also supports `SecureRandom` methods. For example:
 ```ruby
 class User < ActiveRecord::Base
-	# The value will be generated from SecureRandom.uuid
-	# For more info about SecureRandom visit: https://apidock.com/ruby/SecureRandom
-	visibilize type: :uuid
+  # The value will be generated from SecureRandom.uuid
+  # For more info about SecureRandom visit: https://apidock.com/ruby/SecureRandom
+  visibilize type: :uuid
 end
 ```  
 The default type is `:integer`.
@@ -138,8 +138,8 @@ ActiveRecord supports multiple callbacks for different actions. You can provide 
 
 ```ruby
 class User < ActiveRecord::Base
-	visibilize 	type: 		:uuid,
-				      callback: 	:before_update
+  visibilize type:      :uuid,
+             callback:  :before_update
 end
 ```  
 Note that visibilize **does not save** the record when it is called. You must save the generated value manually by calling `instance.save` whenever is fit, or use a callback that is just before the saving progress like `before_create`. 
@@ -149,8 +149,8 @@ You can provide a lambda method to generate a value by custom conditions.
 If you provide a lambda, visibilize will automatically use it and skip its own generators.
 ```ruby
 class User < ActiveRecord::Base
-	visibilize 	column: :token,
-				      lambda: ->() {return  Digest::MD5.hexdigest('foobar')}
+  visibilize  column: :token,
+              lambda: ->() {return  Digest::MD5.hexdigest('foobar')}
 end
 ```  
 Visibilize **cannot modify length** or **promise uniqueness** when using lambdas since the value will be generated from provided lambda method.
