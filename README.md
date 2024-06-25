@@ -1,3 +1,4 @@
+# ⚠️ This is a very old and unmaintaned repository, refer to [friendly_id](https://github.com/norman/friendly_id) for a better solution.
 
 
 # Visibilize
