@@ -1,9 +1,8 @@
 require 'bundler/setup'
 require 'visibilize'
 
+require 'sqlite3'
 require 'active_record'
-require 'mysql2'
-require 'yaml'
 
 require 'models/user'
 require 'models/animal'
@@ -14,9 +13,22 @@ require 'models/computer'
 require 'models/book'
 require 'models/furniture'
 
-# Connect ActiveRecord & Migrate DB
-ActiveRecord::Base.establish_connection(YAML.safe_load(File.open('spec/db/database.yaml')))
-ActiveRecord::MigrationContext.new('spec/db/migrations', ActiveRecord::SchemaMigration).migrate
+def setup_database
+  ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+
+  unless ActiveRecord::Base.connection.tables.any?
+    # Read and execute the schema.sql file
+    schema_file = File.join(File.dirname(__FILE__), 'db', 'schema.sql')
+    sql_statements = File.read(schema_file)
+    
+    # Split the SQL statements and execute them individually
+    sql_statements.split(';').each do |statement|
+      statement.strip!
+      ActiveRecord::Base.connection.execute(statement) if statement.present?
+    end
+    puts "Database schema created."
+  end
+end
 
 UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.freeze
 
@@ -27,5 +39,9 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:suite) do
+    setup_database
   end
 end
