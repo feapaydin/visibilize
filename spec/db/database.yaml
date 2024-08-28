@@ -1,6 +1,0 @@
-adapter: mysql2
-host: 'localhost'
-username: 'root'
-password: 'root'
-database: 'visibilize_test'
-pool: 1

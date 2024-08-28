@@ -1,17 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Visibilize do
-  before(:all) do
-    User.destroy_all
-    Car.destroy_all
-    Animal.destroy_all
-    Building.destroy_all
-    Computer.destroy_all
-    Keyboard.destroy_all
-    Book.destroy_all
-    Furniture.destroy_all
-  end
+require 'spec_helper'
 
+RSpec.describe Visibilize do # rubocop:disable Metrics/BlockLength
   it 'should work without provided options' do
     instance = User.create(name: 'Furkan Enes')
     expect(instance.visible_id.length).to be 8
@@ -34,7 +25,7 @@ RSpec.describe Visibilize do
 
   it 'should work with different type arguments' do
     computer = Computer.create(name: 'Apple Macbook Pro')
-    expect(computer.serial_number).not_to match /^[0-9]$/
+    expect(computer.serial_number).not_to match(/^[0-9]$/)
 
     keyboard = Keyboard.create(name: 'Logitech Keyboard')
     expect(keyboard.serial_number).to match UUID_REGEX
@@ -42,20 +33,9 @@ RSpec.describe Visibilize do
 
   it 'should provide uniqueness' do
     books = []
-    books.push Book.create(name: 'Lord of The Rings')
-    books.push Book.create(name: 'Mistborn: Secret History')
-    books.push Book.create(name: 'How to Program With Ruby')
-    books.push Book.create(name: 'How to Test Your Code')
-    books.push Book.create(name: 'Usage of Rspec')
-    books.push Book.create(name: 'Life of Tiber Septim')
-    books.push Book.create(name: 'How to Become an Influencer')
-    books.push Book.create(name: 'Mistborn: The Last Empire')
-    books.push Book.create(name: 'Why My Life Sucks')
+    9.times { books.push Book.create(name: 'Book') }
 
-    sum = 0
-    books.each { |b| sum += b.page_number }
-
-    expect(sum).to be 45
+    expect(books.map(&:page_number).sort).to contain_exactly(1, 2, 3, 4, 5, 6, 7, 8, 9)
   end
 
   it 'should work with different callbacks' do
